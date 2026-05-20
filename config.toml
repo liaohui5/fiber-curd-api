@@ -1,0 +1,25 @@
+# 配置文件加载的环境
+env = "base"
+
+[app]
+debug = true
+name = "fiber-curd-api"
+
+[logger]
+log_level = "debug" # info | warn | error
+log_prefix = "[App]"
+
+[jwt]
+access_token_expire_time = 60 # 单位分钟
+refresh_token_expire_time = 24 # 单位小时
+access_token_secret = "your-access-token-secret-here"
+refresh_token_secret = "your-refresh-token-secret-here"
+
+[database]
+dsn = "database.sqlite"
+
+[redis]
+host = "127.0.0.1"
+port = 6379
+user = ""
+pass = ""

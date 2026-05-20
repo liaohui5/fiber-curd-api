@@ -1,0 +1,495 @@
+basePath: /api
+definitions:
+  fmtres.FormatResponse:
+    properties:
+      message:
+        description: 操作附带消息
+        type: string
+      results:
+        description: 操作附带数据
+      success:
+        description: 操作是否成功
+        type: boolean
+    type: object
+  handlers.LoginDTO:
+    properties:
+      email:
+        description: 邮箱
+        type: string
+      password:
+        description: 密码md5
+        type: string
+    type: object
+  handlers.LoginRes:
+    properties:
+      access_token:
+        description: 访问token
+        type: string
+      refresh_token:
+        description: 刷新token
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: 用户信息
+    type: object
+  handlers.RegisterDTO:
+    properties:
+      email:
+        description: 用户邮箱
+        type: string
+      password:
+        description: 用户密码md5(避免明文传输)
+        type: string
+      username:
+        description: 用户名(可选)
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handlers.RenewAccessTokenRes:
+    properties:
+      access_token:
+        description: 访问token
+        type: string
+      refresh_token:
+        description: 刷新token
+        type: string
+    type: object
+  models.Article:
+    properties:
+      author:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: 文章作者信息
+      comments:
+        description: 评论数
+        type: integer
+      contents:
+        description: 文章内容
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      likes:
+        description: 点赞数
+        type: integer
+      shares:
+        description: 转发(分享)数
+        type: integer
+      stars:
+        description: 收藏数
+        type: integer
+      title:
+        description: 文章标题
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+      user_id:
+        description: 作者ID
+        type: integer
+    required:
+    - contents
+    - title
+    - user_id
+    type: object
+  models.Task:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      failed_reason:
+        description: 任务失败原因
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      meta_data:
+        additionalProperties: {}
+        description: 执行任务需要的元数据
+        type: object
+      name:
+        description: 任务名称
+        type: string
+      status:
+        description: 任务状态
+        type: integer
+      updated_at:
+        description: 更新时间
+        type: string
+    required:
+    - meta_data
+    - name
+    type: object
+  models.User:
+    properties:
+      articles:
+        description: 该用户发表的文章
+        items:
+          $ref: '#/definitions/models.Article'
+        type: array
+      avatar_url:
+        description: 用户头像URL
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      email:
+        description: 用户邮箱
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      telephone:
+        description: 用户手机号
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is an API for practice fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: fiber-app
+  version: "1.0"
+paths:
+  /api/articles:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 当前页数(默认:1)
+        in: query
+        name: page
+        type: string
+      - description: 每页多少条数据(默认:10)
+        in: query
+        name: limit
+        type: string
+      - description: 搜索参数(默认:{},json字符串{f:title,v:Golang}搜索 title 字段带有 Golang 的数据)
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  items:
+                    $ref: '#/definitions/models.Article'
+                  type: array
+              type: object
+      summary: 搜索文章列表
+      tags:
+      - article
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 文章信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/models.Article'
+              type: object
+      summary: 创建文章
+      tags:
+      - article
+  /api/articles/:id:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 文章ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/fmtres.FormatResponse'
+      summary: 删除文章
+      tags:
+      - article
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 文章ID:1
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/models.Article'
+              type: object
+      summary: 获取文章详情
+      tags:
+      - article
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: 文章信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/models.Article'
+              type: object
+      summary: 修改文章信息
+      tags:
+      - article
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Register user account
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LoginDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/handlers.LoginRes'
+              type: object
+      summary: 登录
+      tags:
+      - auth
+  /api/refresh_acccess_token:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: token-string
+        in: query
+        name: refresh_token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/handlers.RenewAccessTokenRes'
+              type: object
+      summary: 刷新 AccessToken
+      tags:
+      - auth
+  /api/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Register user account
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RegisterDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/models.User'
+              type: object
+      summary: 注册
+      tags:
+      - auth
+  /api/tasks:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 当前页数(默认:1)
+        in: query
+        name: page
+        type: string
+      - description: 每页多少条数据(默认:10)
+        in: query
+        name: limit
+        type: string
+      - description: 搜索参数(默认:{},json字符串{f:title,v:Golang}搜索 title 字段带有 Golang 的数据)
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  items:
+                    $ref: '#/definitions/models.Task'
+                  type: array
+              type: object
+      summary: 搜索任务列表
+      tags:
+      - task
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/models.Task'
+              type: object
+      summary: 创建任务
+      tags:
+      - tasks
+  /api/tasks/:id:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/fmtres.FormatResponse'
+      summary: 删除任务
+      tags:
+      - task
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID:1
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/fmtres.FormatResponse'
+            - properties:
+                results:
+                  $ref: '#/definitions/models.Task'
+              type: object
+      summary: 获取任务详情
+      tags:
+      - task
+  /api/tasks/:id/retry:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 任务ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/fmtres.FormatResponse'
+      summary: 重试失败的任务
+      tags:
+      - task
+swagger: "2.0"

@@ -1,0 +1,15 @@
+# 配置文件加载的环境(仅线上环境加载)
+name = "prod"
+
+[app]
+debug = false
+
+[jwt]
+access_token_expire_time = 10 # 单位分钟
+refresh_token_expire_time = 24 # 单位小时
+access_token_secret = "997cf510-0295-4872-896e-0000eb0f54f1"
+refresh_token_secret = "566247ca-9fce-4454-9f6f-ce8c9030b0b5"
+
+[redis]
+host = "redis_server"
+port = 6379

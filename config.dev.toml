@@ -1,0 +1,8 @@
+# 配置文件加载的环境(仅开发环境加载)
+env = "dev"
+
+[app]
+name = "[fiber-curd-api-dev]"
+
+[logger]
+log_prefix = "[Dev]"
