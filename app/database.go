@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// 数据库链接对象
+// Connection 数据库链接对象
 var Connection *gorm.DB
 
 // ConnectDB 链接数据库

@@ -13,7 +13,7 @@ func init() {
 	})
 }
 
-// IsDev 是否为开发模式
+// IsDevMode 是否为开发模式
 func IsDevMode() bool {
 	return Config.Get("app.debug").(bool)
 }

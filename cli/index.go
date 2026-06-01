@@ -1,10 +1,11 @@
 package cli
 
 import (
-	"fiber_curd_api/app"
-	"fiber_curd_api/tools/db"
 	"flag"
 	"fmt"
+
+	"fiber_curd_api/app"
+	"fiber_curd_api/tools/db"
 )
 
 type CliOptions struct {

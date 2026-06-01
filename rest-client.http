@@ -1,0 +1,27 @@
+@server = http://127.0.0.1:3000
+
+
+### ping
+
+GET {{server}}/api/health HTTP/1.1
+Accept: application/json
+
+
+### LOGIN_REQ
+
+POST {{server}}/api/login HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "account": "admin@example.com",
+  "password": "e10adc3949ba59abbe56e057f20f883e"
+}
+
+
+### articles
+
+GET {{server}}/api/articles HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{LOGIN_REQ.response.body.$.data.accessToken}}

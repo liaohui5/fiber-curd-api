@@ -1,9 +1,10 @@
 package db
 
 import (
+	"fmt"
+
 	"fiber_curd_api/app"
 	"fiber_curd_api/models"
-	"fmt"
 )
 
 // 数据库迁移

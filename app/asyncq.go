@@ -2,10 +2,11 @@ package app
 
 import (
 	"context"
-	"fiber_curd_api/models"
 	"fmt"
 	"log"
 	"time"
+
+	"fiber_curd_api/models"
 
 	"github.com/hibiken/asynq"
 )
@@ -47,14 +48,14 @@ func CloseAsynqClient() {
 // 全局 asynq server 实例
 var asyncServer *asynq.Server
 
-// 停止 asynq 服务端
+// CloseAsynqServer 停止 asynq 服务端
 func CloseAsynqServer() {
 	if asyncServer != nil {
 		asyncServer.Shutdown()
 	}
 }
 
-// 启动 asynq 服务端
+// StartAsynqServer 启动 asynq 服务端
 func StartAsynqServer() {
 	asyncServer = asynq.NewServer(
 		InitConnectRedisOpts(),

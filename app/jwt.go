@@ -29,9 +29,9 @@ func (a *AppConfigAdapter) RefreshTokenSecret() string {
 	return a.getFunc("jwt.refresh_token_secret").(string)
 }
 
-// InitJWTService 从全局 app.Config 创建 JWTService
 var JWTService *jwt.JWTService
 
+// InitJWTService 从全局 app.Config 创建 JWTService
 func InitJWTService() {
 	adapter := NewAppConfigAdapter(Config.Get)
 	JWTService = jwt.NewJWTService(adapter)

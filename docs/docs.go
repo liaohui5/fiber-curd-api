@@ -431,7 +431,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "tasks"
+                    "task"
                 ],
                 "summary": "创建任务",
                 "parameters": [

@@ -427,7 +427,7 @@ paths:
               type: object
       summary: 创建任务
       tags:
-      - tasks
+      - task
   /api/tasks/:id:
     delete:
       consumes:

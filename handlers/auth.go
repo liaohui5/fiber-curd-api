@@ -9,27 +9,27 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-// 注册请求数据
+// RegisterDTO 注册请求数据
 type RegisterDTO struct {
 	Email    string `json:"email"     validate:"required,email"`  // 用户邮箱
 	Password string `json:"password"  validate:"required,len=32"` // 用户密码md5(避免明文传输)
 	Username string `json:"username"`                             // 用户名(可选)
 }
 
-// 登录请求数据
+// LoginDTO 登录请求数据
 type LoginDTO struct {
 	Email    string `json:"email"`    // 邮箱
 	Password string `json:"password"` // 密码md5
 }
 
-// 登录响应数据
+// LoginRes 登录响应数据
 type LoginRes struct {
 	User         models.User `json:"user"`          // 用户信息
 	AccessToken  string      `json:"access_token"`  // 访问token
 	RefreshToken string      `json:"refresh_token"` // 刷新token
 }
 
-// 续签 AccessToken 响应数据
+// RenewAccessTokenRes 续签 AccessToken 响应数据
 type RenewAccessTokenRes struct {
 	AccessToken  string `json:"access_token"`  // 访问token
 	RefreshToken string `json:"refresh_token"` // 刷新token

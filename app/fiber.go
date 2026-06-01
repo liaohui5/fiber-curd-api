@@ -15,7 +15,7 @@ func (v *structValidator) Validate(out any) error {
 	return v.validate.Struct(out)
 }
 
-// 初始化 Fiber App 实例
+// InitFiberApp 初始化 Fiber App 实例
 func InitFiberApp() *fiber.App {
 	return fiber.New(fiber.Config{
 		StructValidator: &structValidator{validate: validator.New()},

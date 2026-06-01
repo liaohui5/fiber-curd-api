@@ -13,7 +13,7 @@ import (
 // Logger 全局日志实例
 var Logger *zap.Logger
 
-// 5.这个 CustomLoggerEncoder 会实现日志双写功能
+// CustomLoggerEncoder 会实现日志双写功能(5)
 type CustomLoggerEncoder struct {
 	zapcore.Encoder
 	warnFile  *os.File
@@ -68,6 +68,7 @@ func (cle CustomLoggerEncoder) EncodeEntry(ent zapcore.Entry, fields []zapcore.F
 	return buf, nil
 }
 
+// InitLogger 初始化日志模块
 func InitLogger() {
 	logCfg := zap.NewProductionConfig()
 	logCfg.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout(DATETIME_FMT) // 2.格式化时间
@@ -90,6 +91,8 @@ func InitLogger() {
 	zap.ReplaceGlobals(Logger) // 7.全局日志实例设置
 }
 
+
+// getLoggerLevelFromConfig 从配置文件中读取日志记录等级(私有方法)
 func getLoggerLevelFromConfig() zapcore.Level {
 	configLogLevel := Config.Get("logger.log_level")
 	switch configLogLevel {

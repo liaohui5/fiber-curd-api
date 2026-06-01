@@ -6,18 +6,18 @@ import (
 	"gorm.io/gorm"
 )
 
-// 用户表模型
+// User 用户表模型
 type User struct {
-	ID        uint           `gorm:"primarykey"      json:"id"`                              // 主键ID
-	CreatedAt time.Time      `gorm:""                json:"created_at"`                      // 创建时间
-	UpdatedAt time.Time      `gorm:""                json:"updated_at"`                      // 更新时间
-	DeletedAt gorm.DeletedAt `gorm:"index"           json:"deleted_at" swaggerignore:"true"` // 删除时间
-	Username  string         `gorm:"size:64;"        json:"username"`                        // 用户名
-	Telepone  string         `gorm:"size:16;"        json:"telephone"`                       // 用户手机号
-	Email     string         `gorm:"size:64;unique;" json:"email"`                           // 用户邮箱
-	Password  string         `gorm:"size:128;"       json:"-"`                               // 用户密码(-json序列化时忽略字段)
-	AvatarUrl string         `gorm:"size:255"        json:"avatar_url"`                      // 用户头像URL
-	Articles  []Article      `gorm:"foreignKey:UserID;"`                                     // 该用户发表的文章
+	ID        uint           `gorm:"primarykey"          json:"id"`                              // 主键ID
+	CreatedAt time.Time      `gorm:""                    json:"created_at"`                      // 创建时间
+	UpdatedAt time.Time      `gorm:""                    json:"updated_at"`                      // 更新时间
+	DeletedAt gorm.DeletedAt `gorm:"index"               json:"deleted_at" swaggerignore:"true"` // 删除时间
+	Username  string         `gorm:"size:64;"            json:"username"`                        // 用户名
+	Telepone  string         `gorm:"size:16;"            json:"telephone"`                       // 用户手机号
+	Email     string         `gorm:"size:64;unique;"     json:"email"`                           // 用户邮箱
+	Password  string         `gorm:"size:128;"           json:"-"`                               // 用户密码(-json序列化时忽略字段)
+	AvatarURL string         `gorm:"size:255"            json:"avatar_url"`                      // 用户头像URL
+	Articles  []Article      `gorm:"foreignKey:UserID;"  json:"articles"`                        // 该用户发表的文章
 }
 
 // gorm.Model 带有默认约定字段(id/created_at/updated_at/delete_at)

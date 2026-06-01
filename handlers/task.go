@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-// @Tags    tasks
+// @Tags    task
 // @Summary 创建任务
 // @Accept  json
 // @Produce json

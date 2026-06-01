@@ -13,7 +13,7 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/static"
 )
 
-// initMiddlewares 初始化全局中间件
+// InitMiddlewares 初始化全局中间件
 func InitMiddlewares(server *fiber.App) {
 	server.Use(cors.New())
 	server.Use("/*", static.New("./static"))
@@ -27,7 +27,7 @@ func InitMiddlewares(server *fiber.App) {
 	}
 }
 
-// InitSwaggerRoutes: 初始化 swagger 插件路由
+// InitSwaggerRoutes 初始化 swagger 插件路由
 func InitSwaggerRoutes(server *fiber.App) {
 	// rebuild swagger docs: swag init
 	// swagger ui base path: /swagger/docs
