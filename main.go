@@ -36,7 +36,7 @@ func main() {
 
 	app.CloseAsynqClient()
 	app.CloseAsynqServer()
-	fiberApp.Shutdown()
+	app.ShutdownFiberServer(fiberApp)
 
 	fmt.Println(">>> Server stopped <<<")
 }

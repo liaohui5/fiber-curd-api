@@ -2,6 +2,7 @@ package app
 
 import (
 	"log"
+	"os"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v3"
@@ -32,5 +33,13 @@ func StartFiberServer(server *fiber.App) {
 
 	if err := server.Listen(":3000"); err != nil {
 		log.Fatal(err)
+	}
+}
+
+// ShutdownFiberServer 关闭 fiber 服务
+func ShutdownFiberServer(server *fiber.App) {
+	if err := server.Shutdown(); err != nil {
+		log.Fatal("[Shutdown] error: ", err)
+		os.Exit(1)
 	}
 }
