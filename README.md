@@ -44,5 +44,5 @@ swag init
 默认情况下, 没有启动这个服务, 需要手动修改 `main.go`
 
 - [asynq](https://github.com/hibiken/asynq)
-- [学习笔记](https://golang.liaohui5.cn/libs/9.%E5%BC%82%E6%AD%A5%E9%98%9F%E5%88%97-asynq.html)
+- [学习笔记](https://golang.liaohui5.cn/libs/8.%E5%BC%82%E6%AD%A5%E9%98%9F%E5%88%97-asynq.html)
 - 注: 如果要使用异步队列, 需要先启动一个 redis 服务器
